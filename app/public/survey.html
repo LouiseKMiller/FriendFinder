@@ -8,6 +8,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="https://use.fontawesome.com/2d86ee1b19.js"></script>
+
 
 </head>
 <body>
@@ -47,41 +49,141 @@
 					<div class="form-group">
 						<h3 class="text-left lead">Question 1</h4>
 						<label for="">You prefer dogs over cats.</label>
-						<select class="form-control">
+						<select id="q1" class="form-control">
 							<option value="" selected hidden>Select an Option</option>
-							<option>1 (strongly agree)</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5 (strongly disagree)</option>
+							<option value="1">1 (strongly agree)</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5 (strongly disagree)</option>
 						</select>
 					</div>
 
 					<div class="form-group">
-						<label for="">Question 2</label>
-						<select class="form-control">
+						<h3 class="text-left lead">Question 2</h4>
+						<label for="">You like anchovies on your pizza.</label>
+						<select id="q2" class="form-control">
 							<option value="" selected hidden>Select an Option</option>
-							<option>1 (strongly agree)</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5 (strongly disagree)</option>
+							<option value="1">1 (strongly agree)</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5 (strongly disagree)</option>
 						</select>
 					</div>
 				</form>
 			</div>
 		</div>
+
+		<button type="submit" class="btn btn-block btn-lg btn-primary submit glyphicon glyphicon-ok-sign">&nbsp;Submit</button>
 		<hr>
 
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
 
-	    <footer class="footer">
-	      <div class="container">
-	        <p><a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a> | <a href="https://github.com/afhaque/HotRestaurant">GitHub Repo</a></p>
-	      </div>
-	    </footer>
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Modal Header</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p>Some text in the modal.</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+
+		  </div>
+		</div>
+
+
+    <footer class="footer">
+      <div class="container">
+	        <p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/LouiseKMiller/FriendFinder">GitHub Repo</a></p>
+      </div>
+    </footer>
 
 	</div>
 
 </body>
 </html>
 
+<!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
+<script type="text/javascript">
+
+	// In this code below we create the Front-end Javascript which "POSTS" our form data to our express server.
+	// In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
+	// Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
+	// In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+
+	$(".submit").on("click", function(){
+
+		// Here we grab the form elements
+		var errorFlag = false;
+
+		var user = {
+			name: $('#name').val().trim(),
+			photoURL: $('#photo').val().trim(),
+			answers: []
+		};
+
+		if (!user.name || !user.photoURL) {
+			alert("you must provide your name AND a link to your picture");
+			errorFlag = true;
+		}
+
+		for (var i=0; i<2; i++) {
+			var qID = "#q" + (i+1);
+			user.answers[i] = $(qID).val();
+			if (!user.answers[i]) {
+				alert("you must answer each question");
+				errorFlag = true;
+			}
+		}
+
+
+		// This line is the magic. It's very similar to the standard ajax function we used.
+		// Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+		// The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+		// depending on if a tables is available or not.
+
+		// Here we get the location of the root page.
+		// We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
+		var currentURL = window.location.origin;
+
+	    $.post(currentURL + "/api/friends", user,
+	    function(data){
+
+	    	// If a table is available... tell user they are booked.
+	    	console.log("returned data" + data);
+			$('#myModal').modal('show');
+
+
+
+			// When the user clicks on <span> (x), close the modal
+			// span.onclick = function() {
+			//     modal.style.display = "none";
+			// }
+
+			// When the user clicks anywhere outside of the modal, close it
+			// window.onclick = function(event) {
+			//     if (event.target == modal) {
+			//         modal.style.display = "none";
+			//     }
+			// }
+	    	// Clear the form when submitting
+   //  		$('#reserve_name').val("");
+			// $('#reserve_phone').val("");
+			// $('#reserve_email').val("");
+			// $('#reserve_uniqueID').val("");
+
+	    });
+
+return false;
+
+});
+
+</script>

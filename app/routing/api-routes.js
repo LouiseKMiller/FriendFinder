@@ -4,8 +4,8 @@
 // These data sources hold arrays of information on friends
 // ===============================================================================
 
-var friends 		= require('../data/friends.js');
-var path 			= require('path');
+var friends = require('../data/friend-data.js');
+var path = require('path');
 
 
 
@@ -23,7 +23,7 @@ module.exports = function(app){
 	// ---------------------------------------------------------------------------
 
 	app.get('/api/friends', function(req, res){
-		res.json(friendsData);
+		res.json(friends);
 	});
 
 
@@ -34,10 +34,41 @@ module.exports = function(app){
 	// (ex. User fills out a reservation request... this data is then sent to the server...
 	// Then the server saves the data to the tableData array)
 	// ---------------------------------------------------------------------------
+	function indexOfMin(arr) {
+	    if (arr.length === 0) {
+	        return -1;
+	    }
+
+	    var min = arr[0];
+	    var minIndex = 0;
+
+	    for (var i = 1; i < arr.length; i++) {
+	        if (arr[i] < min) {
+	            minIndex = i;
+	            min = arr[i];
+	        }
+	    }
+
+	    return minIndex;
+	}
 
 	app.post('/api/friends', function(req, res){
 
 		// Enter code here to handle incoming survey results and handle compatibility logic
+		var userAnswers = req.body.answers;
+		var scores = [];
+
+		for (var i=0; i<friends.length; i++) {
+			scores[i] = 0;
+			for (var j=0; j<userAnswers.length; j++) {
+				scores[i] += Math.abs((friends[i].answers[j] - userAnswers[j]));
+			}
+		}
+		var matchIndex = indexOfMin(scores);
+
+		friends.push(req.body);
+
+		res.json(friends[matchIndex]);
 
 	});
 
@@ -47,8 +78,8 @@ module.exports = function(app){
 
 	app.post('/api/clear', function(req, res){
 		// Empty out the arrays of data
-		friendsData = [];
+		friends = [];
 
-		console.log(friendsData);
+		console.log(friends);
 	})
 }

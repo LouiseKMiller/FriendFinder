@@ -14,22 +14,22 @@ var friendsArray = [
 	{
 		name: "Steve Dallas",
 		photoURL: "xxx",
-		answers: ["0", "3"],
+		answers: ["0", "0"],
 	},
 	{
 		name: "Bill the Cat",
 		photoURL: "xxx",
-		answers: ["0", "3"],
+		answers: ["1", "1"],
 	},
 	{
 		name: "Boopsie",
 		photoURL: "xxx",
-		answers: ["0", "3"],
+		answers: ["2", "2"],
 	},
 	{
 		name: "Cutter John",
 		photoURL: "xxx",
-		answers: ["0", "3"],
+		answers: ["3", "3"],
 	},
 
 ];
