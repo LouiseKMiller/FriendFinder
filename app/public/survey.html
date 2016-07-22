@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Survey Page - Friend Finder</title>
+
+	<!-- Latest compiled and minified CSS & JS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+	<div class="container">
+
+		<h2 class="text-left">Survey Questions</h2>
+		<hr>
+
+		<div class="row">
+			<div class="col-lg-12">
+
+				<!-- User Information -->
+				<h3 class="text-left lead">About You</h4>
+
+				<form role="form">
+
+					<div class="form-group">
+						<label for="">Name (Required)</label>
+						<input type="text" class="form-control" id="name">
+					</div>
+
+					<div class="form-group">
+						<label for="">Link to Photo Image (Required)</label>
+						<input type="text" class="form-control" id="photo">
+					</div>
+				</form>
+			</div>
+		</div>
+		<hr>
+
+		<div class="row">
+			<div class="col-lg-12">
+
+				<form role="form">
+
+					<div class="form-group">
+						<h3 class="text-left lead">Question 1</h4>
+						<label for="">You prefer dogs over cats.</label>
+						<select class="form-control">
+							<option value="" selected hidden>Select an Option</option>
+							<option>1 (strongly agree)</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5 (strongly disagree)</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="">Question 2</label>
+						<select class="form-control">
+							<option value="" selected hidden>Select an Option</option>
+							<option>1 (strongly agree)</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5 (strongly disagree)</option>
+						</select>
+					</div>
+				</form>
+			</div>
+		</div>
+		<hr>
+
+
+	    <footer class="footer">
+	      <div class="container">
+	        <p><a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a> | <a href="https://github.com/afhaque/HotRestaurant">GitHub Repo</a></p>
+	      </div>
+	    </footer>
+
+	</div>
+
+</body>
+</html>
+
