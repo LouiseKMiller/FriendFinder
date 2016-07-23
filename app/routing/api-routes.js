@@ -61,7 +61,7 @@ module.exports = function(app){
 		for (var i=0; i<friends.length; i++) {
 			scores[i] = 0;
 			for (var j=0; j<userAnswers.length; j++) {
-				scores[i] += Math.abs((friends[i].answers[j] - userAnswers[j]));
+				scores[i] += Math.abs((parseInt(friends[i].answers[j]) - parseInt(userAnswers[j])));
 			}
 		}
 		var matchIndex = indexOfMin(scores);
